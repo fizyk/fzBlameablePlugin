@@ -40,8 +40,9 @@ class Doctrine_Template_Blameable extends Doctrine_Template
      *
      * @var string
      */
-    protected $_options = array('listener'      => 'Doctrine_Template_Listener_Blameable',
-                                'blameVar'      => 'userId',
+    protected $_options = array(
+//                                'listener'      => 'Doctrine_Template_Listener_Blameable',
+//                                'blameVar'      => 'userId',
                                 'default'       => false,
                                 'params'        => array(),
                                 'columns'       => array('created' =>  array('name'          =>  'created_by',
