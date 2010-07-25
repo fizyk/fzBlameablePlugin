@@ -33,7 +33,7 @@
  * @version     $Revision$
  * @author      Colin DeCarlo <cdecarlo@gmail.com>
  */
-class Doctrine_Template_Blameable extends Doctrine_Template
+class Doctrine_Template_fzBlameable extends Doctrine_Template
 {
     /**
      * Array of Blameable options

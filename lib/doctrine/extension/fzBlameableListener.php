@@ -31,7 +31,7 @@
  * @version     $Revision$
  * @author      Colin DeCarlo <cdecarlo@gmail.com>
  */
-class Doctrine_Template_Listener_Blameable extends Doctrine_Record_Listener
+class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
 {
     /**
      * Array of timestampable options
