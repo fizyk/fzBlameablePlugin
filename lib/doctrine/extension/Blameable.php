@@ -48,27 +48,25 @@ class Doctrine_Template_Blameable extends Doctrine_Template
                                 'columns'       => array('created' =>  array('name'          =>  'created_by',
                                                                              'alias'         =>  null,
                                                                              'type'          =>  'integer',
-                                                                             'length'        =>  8,
+                                                                             'length'        =>  4,
                                                                              'disabled'      =>  false,
-                                                                             'options'       =>  array('notnull' => true,)
+                                                                             'options'       =>  array('notnull' => false,)
                                                                             ),
                                                          'updated' =>  array('name'          =>  'updated_by',
                                                                              'alias'         =>  null,
                                                                              'type'          =>  'integer',
-                                                                             'length'        =>  8,
+                                                                             'length'        =>  4,
                                                                              'disabled'      =>  false,
                                                                              'onInsert'      =>  true,
-                                                                             'options'       =>  array('notnull' => true,)
+                                                                             'options'       =>  array('notnull' => false,)
                                                                             )
                                                         ),
-                                'relations'       => array('created' => array('disabled'      => true,
+                                'relations'       => array('created' => array('disabled'      => false,
                                                                               'name'          => 'CreatedBy',
-                                                                              'class'         => 'User',
                                                                               'foreign'       => 'id', 
                                                                               ),
-                                                           'updated' => array('disabled'      => true,
+                                                           'updated' => array('disabled'      => false,
                                                                               'name'          => 'UpdatedBy',
-                                                                              'class'         => 'User',
                                                                               'foreign'       => 'id', 
                                                                               ),
                                                         ));
@@ -82,13 +80,7 @@ class Doctrine_Template_Blameable extends Doctrine_Template
      */
     public function __construct(array $options = array())
     {
-    	
-        if (!class_exists($this->_options['listener'], true)) {
-            throw new Exception('Class: ' . $this->_options['listener'] . ' not found');
-        }
-        
-        parent::__construct($options);
-        
+    	parent::__construct($options);
     }
     
     /**
@@ -124,13 +116,7 @@ class Doctrine_Template_Blameable extends Doctrine_Template
                              $this->_options['columns']['updated']['options']);
         }
 
-        $listener = new $this->_options['listener']($this->_options);
-        
-        if (get_class($listener) !== 'Doctrine_Template_Listener_Blameable' && 
-            !is_subclass_of($listener, 'Doctrine_Template_Listener_Blameable')) {
-            	throw new Exception('Invalid listener. Must be Doctrine_Template_Listener_Blameable or subclass');
-        }
-        $this->addListener($listener, 'Blameable');
+        $this->addListener( new Doctrine_Template_Listener_Blameable($this->_options), 'Blameable');
     }
     
     /**
@@ -140,21 +126,36 @@ class Doctrine_Template_Blameable extends Doctrine_Template
      */
     public function setUp()
     {
+      $className = $this->_table->getComponentName();
      
       if( ! $this->_options['relations']['created']['disabled']) {
-        $this->hasOne($this->_options['relations']['created']['class'] . ' as ' . $this->_options['relations']['created']['name'], 
+        $this->hasOne( 'sfGuardUser as ' . $this->_options['relations']['created']['name'],
           array('local' => $this->_options['columns']['created']['name'],
                 'foreign' => $this->_options['relations']['created']['foreign'],
           )
         );
+
+        Doctrine_Core::getTable( 'sfGuardUser' )->bind(
+        array($className.' as Created'.$className.'s',
+          array( 'class'    => $className,
+            'local'    => $this->_options['relations']['created']['foreign'],
+            'foreign'  => $this->_options['columns']['created']['name']
+        )), Doctrine_Relation::MANY );
+
       }
       
       if( ! $this->_options['relations']['updated']['disabled'] && ! $this->_options['columns']['updated']['disabled']) {
-        $this->hasOne($this->_options['relations']['updated']['class'] . ' as ' . $this->_options['relations']['updated']['name'], 
+        $this->hasOne('sfGuardUser as ' . $this->_options['relations']['updated']['name'],
           array('local' => $this->_options['columns']['updated']['name'],
                 'foreign' => $this->_options['relations']['updated']['foreign'],
           )
         );
+        Doctrine_Core::getTable( 'sfGuardUser' )->bind(
+        array($className.' as Updated'.$className.'s',
+          array( 'class'    => $className,
+            'local'    => $this->_options['relations']['updated']['foreign'],
+            'foreign'  => $this->_options['columns']['updated']['name']
+        )), Doctrine_Relation::MANY );
       }
       
       
