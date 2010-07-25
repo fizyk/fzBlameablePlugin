@@ -41,8 +41,7 @@ class Doctrine_Template_fzBlameable extends Doctrine_Template
      * @var string
      */
     protected $_options = array(
-//                                'listener'      => 'Doctrine_Template_Listener_Blameable',
-//                                'blameVar'      => 'userId',
+                                'listener'      => 'Doctrine_Template_Listener_fzBlameable',
                                 'default'       => false,
                                 'params'        => array(),
                                 'columns'       => array('created' =>  array('name'          =>  'created_by',
@@ -80,6 +79,10 @@ class Doctrine_Template_fzBlameable extends Doctrine_Template
      */
     public function __construct(array $options = array())
     {
+        if (!class_exists($this->_options['listener'], true)) {
+            throw new Exception('Class: ' . $this->_options['listener'] . ' not found');
+        }
+
     	parent::__construct($options);
     }
     
@@ -116,7 +119,13 @@ class Doctrine_Template_fzBlameable extends Doctrine_Template
                              $this->_options['columns']['updated']['options']);
         }
 
-        $this->addListener( new Doctrine_Template_Listener_Blameable($this->_options), 'Blameable');
+        $listener = new $this->_options['listener']($this->_options);
+
+        if (get_class($listener) !== 'Doctrine_Template_Listener_fzBlameable' &&
+            !is_subclass_of($listener, 'Doctrine_Template_Listener_fzBlameable')) {
+            	throw new Exception('Invalid listener. Must be Doctrine_Template_Listener_fzBlameable or subclass');
+        }
+        $this->addListener($listener, 'Blameable');
     }
     
     /**
