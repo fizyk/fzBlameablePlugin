@@ -123,7 +123,7 @@ class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
     }
 
     /**
-     *
+     * Method returns user's indentity
      * @return int $ident sf_guard_user.id
      */
     public function getUserIdentity()
@@ -132,43 +132,4 @@ class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
 
         return $ident;
     }
-
-    /**
-     * Gets the users identity from the $blameVar index of either the $_SESSION
-     * or $GLOBALS array; OR use the default value
-     *
-     * @return void
-     */
-//    public function getUserIdentity()
-//    {
-//        if (PHP_SAPI === 'cli') {
-//            $ident = isset($GLOBALS[$this->_options['blameVar']]) ? $GLOBALS[$this->_options['blameVar']] : null;
-//        } else {
-//            $ident = isset($_SESSION[$this->_options['blameVar']]) ? $_SESSION[$this->_options['blameVar']] : null;
-//        }
-//
-//        if (is_null($ident) && $this->_options['default'] !== false) {
-//            if (is_null($this->_default)) {
-//
-//                /*
-//                 * Try to parse the default value as a dql string, if that fails
-//                 * set the default value equal to the literal value of the string
-//                 */
-//
-//                try {
-//                    $default = Doctrine_Query::create()
-//                        ->parseDqlQuery($this->_options['default'])
-//                        ->fetchOne($this->_options['params']);
-//
-//                    $this->_default = $default[$this->_options['blameVar']];
-//                } catch (Doctrine_Query_Tokenizer_Exception $e) {
-//                    $this->_default = $this->_options['default'];
-//                }
-//            }
-//            $ident = $this->_default;
-//        }
-//
-//        return $ident;
-//
-//    }
 }
