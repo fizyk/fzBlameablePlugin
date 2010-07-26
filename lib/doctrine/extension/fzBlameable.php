@@ -143,7 +143,7 @@ class Doctrine_Template_fzBlameable extends Doctrine_Template
                 'foreign' => $this->_options['relations']['created']['foreign'],
           )
         );
-
+        //This relation adds foreignAlias to this relation - fizyk
         Doctrine_Core::getTable( 'sfGuardUser' )->bind(
         array($className.' as Created'.$className.'s',
           array( 'class'    => $className,
@@ -159,6 +159,7 @@ class Doctrine_Template_fzBlameable extends Doctrine_Template
                 'foreign' => $this->_options['relations']['updated']['foreign'],
           )
         );
+        //This relation adds foreignAlias to this relation - fizyk
         Doctrine_Core::getTable( 'sfGuardUser' )->bind(
         array($className.' as Updated'.$className.'s',
           array( 'class'    => $className,
