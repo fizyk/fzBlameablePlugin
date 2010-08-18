@@ -128,8 +128,13 @@ class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
      */
     public function getUserIdentity()
     {
-        $ident = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-
-        return $ident;
+        if( sfContext::getInstance()->getUser()->isAuthenticated() )
+        {
+            return sfContext::getInstance()->getUser()->getGuardUser()->getId();
+        }
+        else
+        {
+            return null;
+        }
     }
 }
