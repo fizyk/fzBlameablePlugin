@@ -47,14 +47,14 @@ class Doctrine_Template_fzBlameable extends Doctrine_Template
                                 'columns'       => array('created' =>  array('name'          =>  'created_by',
                                                                              'alias'         =>  null,
                                                                              'type'          =>  'integer',
-                                                                             'length'        =>  4,
+                                                                             'length'        =>  8,
                                                                              'disabled'      =>  false,
                                                                              'options'       =>  array('notnull' => false,)
                                                                             ),
                                                          'updated' =>  array('name'          =>  'updated_by',
                                                                              'alias'         =>  null,
                                                                              'type'          =>  'integer',
-                                                                             'length'        =>  4,
+                                                                             'length'        =>  8,
                                                                              'disabled'      =>  false,
                                                                              'onInsert'      =>  true,
                                                                              'options'       =>  array('notnull' => false,)

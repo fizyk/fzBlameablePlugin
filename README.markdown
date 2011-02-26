@@ -20,7 +20,7 @@ To install plugin from symfony plugin repository run:
 
 To install plugin from package, copy it to your project root's directory and run:
 
-    ./symfony plugin:install fzBlameablePlugin-1.0.0.tgz
+    ./symfony plugin:install fzBlameablePlugin-1.1.0.tgz
 
 After installing, you have to run:
 
@@ -44,7 +44,7 @@ After that you'll have two fields created_by and updated_by added to your model,
 and two relations between your model, and sfGuardUser. By default, both created
 and updated fields and relations will be enabled allowing null values.
 
-These are default settings for columns fzBlameable, you don't have to write them unless you want to change it!
+These are default settings for columns fzBlameable, you don't have to write them unless you want to change them!
 
     MyModel:
       actAs:
@@ -54,12 +54,14 @@ These are default settings for columns fzBlameable, you don't have to write them
               name: created_by
               alias: null
               type: integer
-              length: 4
+              length: 8
               disabled: false
               options:
                 notnull: false
             updated:
               #same as for created here
+
+Default values for created_by and updated_by are suited for sfDoctrineGuard 5.x
 
 You can also modify relations:
 
