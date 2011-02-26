@@ -73,6 +73,7 @@ You can also modify relations:
               disabled: false
               name: CreatedBy
               foreign: id
+              foreignAlias: false
             updated:
               #same as for created here
 
@@ -81,6 +82,10 @@ You can also modify relations:
 To use this relations in dql, you have as in original behaviour, CreatedBy relation
 in the model with behaviour. Additionally fzBlameable adds Created*MyModel*s
 relation alias to the sfGuardUser, which eases creation of complex dql queries.
+
+The Created*MyModel*s is default name for relation alias on sfGuardUser model. 
+To set own name, please modify foreignAlias setting for each relation
+
 
 Thanks
 ------------
