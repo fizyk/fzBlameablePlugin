@@ -39,25 +39,25 @@ class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
      * @var string
      */
     protected $_options = array();
-    
+
     /**
      * The default value of the blameVar if one isn't available
-     * 
+     *
      * @var string
      */
     protected $_default = null;
-    
-    
+
+
     /**
      * __construct
      *
-     * @param string $options 
+     * @param string $options
      * @return void
      */
     public function __construct(array $options)
     {
         $this->_options = $options;
- 
+
     }
 
     /**
@@ -128,7 +128,7 @@ class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
      */
     public function getUserIdentity()
     {
-        if( sfContext::getInstance()->getUser()->isAuthenticated() )
+        if (sfContext::hasInstance() && sfContext::getInstance()->getUser()->isAuthenticated())
         {
             return sfContext::getInstance()->getUser()->getGuardUser()->getId();
         }
