@@ -130,7 +130,7 @@ class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
     {
         if (sfContext::hasInstance() && sfContext::getInstance()->getUser()->isAuthenticated())
         {
-            return sfContext::getInstance()->getUser()->getGuardUser()->getId();
+            return sfContext::getInstance()->getUser()->getAttribute('user_id', null, 'sfGuardSecurityUser');
         }
         else
         {
