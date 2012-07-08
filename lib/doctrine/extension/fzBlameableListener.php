@@ -117,7 +117,14 @@ class Doctrine_Template_Listener_fzBlameable extends Doctrine_Record_Listener
             $query = $event->getQuery();
 
             if ( ! $query->contains($field)) {
+              if (null === $this->getUserIdentity())
+              {
+                $query->set($field, 'NULL');
+              }
+              else
+              {
                 $query->set($field, '?', $this->getUserIdentity());
+              }
             }
         }
     }
